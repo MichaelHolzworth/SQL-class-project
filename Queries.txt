@@ -14,7 +14,7 @@ where
     and TY.Team_ID = 2;
 
 -- Question 3 B
-elect
+select
     P.Name,
     PY.Year,
     T.Name
