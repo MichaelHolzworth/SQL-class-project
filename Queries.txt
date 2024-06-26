@@ -1,0 +1,88 @@
+-- Question 3 A
+select
+    T.Name,
+    CSS.Year,
+    CSS.Wins
+from
+    COACH_SEASON_STAT as CSS,
+    TEAM_YEAR as TY
+join TEAM as T on T.ID = TY.Team_ID
+where
+    CSS.Year = TY.Year
+    and CSS.Coach_ID = TY.Coach_ID
+    and TY.Year > 2021
+    and TY.Team_ID = 2;
+
+-- Question 3 B
+elect
+    P.Name,
+    PY.Year,
+    T.Name
+from 
+    PLAYER_YEAR as PY
+join 
+    TEAM as T on PY.Team_ID = T.ID,
+    PLAYER as P on PY.Player_ID = P.ID
+where
+    P.ID = 3;
+
+-- Question 3 C
+select 
+    C.ID,
+    C.Name
+from 
+    PLAYER as P
+join
+    PLAYER_YEAR as PY on P.ID = PY.Team_ID,
+    TEAM_YEAR as TY on PY.Team_ID = TY.Team_ID and PY.Year = TY.Year,
+    COACH_SEASON_STAT as CSS on TY.Coach_ID = CSS.Coach_ID and TY.Year = CSS.Year,
+    COACH as C on C.ID = CSS.Coach_ID
+where
+    P.ID = 3;
+
+-- Question 3 D
+select
+    T.Name,
+    PY.Year, 
+    count(PY.Player_ID)
+from 
+    PLAYER_YEAR as PY
+join 
+    TEAM as T on PY.Team_ID = T.ID
+where 
+    PY.Team_ID = 2
+group by 
+    PY.Year;
+
+-- Question 3 E
+select 
+    SP.TeamID, 
+    SP.TeamName, 
+    CSS.Coach_ID, 
+    CSS.Wins, 
+    CSS.Losses, 
+    CSS.Num_Passes, 
+    CSS.Num_Runs, 
+    SP.Year, 
+    max(SP.SumPoint)
+from
+    (
+        select 
+            T.ID as TeamID,
+            T.Name as TeamName, 
+            G.Year as Year, 
+            SUM(case when G.Home_Team_ID = T.ID then G.Home_Points else G.Away_Points end) as SumPoint
+        from
+            TEAM as T,
+            GAME as G
+        where 
+            G.Home_Team_ID = T.ID 
+            or G.Away_Team_ID = T.ID
+        group by 
+            T.ID, 
+            G.Year
+        ) as SP
+join
+    TEAM_YEAR as TY on SP.Year = TY.Year and TY.Team_ID = SP.TeamID,
+    COACH_SEASON_STAT as CSS on TY.Coach_ID = CSS.Coach_ID and TY.Year = CSS.Year
+group by SP.TeamID;

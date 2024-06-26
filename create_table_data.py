@@ -365,7 +365,7 @@ def CreatePlayerYearCSV(path, playerPath, teamPath):
 	pDF = pd.read_csv(playerPath)
 	print(pDF.ID.unique())
 	tDF = pd.read_csv(teamPath)
-	years=[2023,2024]
+	years=[2022,2023]
 	for i in tqdm(range(pDF.shape[0])):
 		p = pDF.iloc[i]
 		for year in years:
@@ -406,7 +406,7 @@ def CreateGameCSV(path, teamPath):
 		'Home_Points':np.array([]),'Away_Points':np.array([])}
 	teamDF = pd.read_csv(teamPath)
 	teamIDs = teamDF.ID
-	years=[2023,2024]
+	years=[2022,2023]
 	weeks=[1,2,3,4,5,6,7,8,9,10,11,12,13,14]
 	seasonTypes=[0,0,0,0,0,1]
 	for i in tqdm(range(20)):
