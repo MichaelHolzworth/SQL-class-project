@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS PLAYER_GAME_STATS (
 	foreign key (Player_ID) references PLAYER (ID)
 );
 
-REATE TABLE IF NOT EXISTS PLAYER_SEASON_STATS (
+CREATE TABLE IF NOT EXISTS PLAYER_SEASON_STATS (
 	Player_ID int not null,
 	Year int not null,
 	Touchdowns int,
