@@ -1,0 +1,47 @@
+-- Question 4 A
+select
+	t.Name,
+	tss.Team_ID,
+	tss.Touchdowns
+from
+	TEAM_SEASON_STATS as tss
+join
+	TEAM as t on tss.Team_ID = t.ID
+where
+	tss.Year = 2023
+order by
+	tss.Touchdowns desc;
+
+-- Question 4 B
+select
+	PY.Player_ID,
+	P.Name,
+	avg(PY.Height)
+from
+	PLAYER_YEAR as PY
+join
+	PLAYER as P on P.ID = PY.Player_ID
+where
+	PY.Team_ID = 2
+group by
+	PY.Player_ID;
+
+-- Question 4 C
+select
+	P.ID,
+	P.Name,
+	R.Year,
+	R.Age,
+	R.Height,
+	R.Weight
+from
+	(select
+		PY.Player_ID,
+		min(PY.Year) as M
+	from
+		PLAYER_YEAR as PY
+	group by
+		PY.Player_ID) as L
+join
+	PLAYER as P on P.ID = L.Player_ID,
+	PLAYER_YEAR as R on R.Player_ID = L.Player_ID and R.Year = L.M;
