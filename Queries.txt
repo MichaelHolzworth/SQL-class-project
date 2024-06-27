@@ -38,7 +38,8 @@ join
     COACH_SEASON_STAT as CSS on TY.Coach_ID = CSS.Coach_ID and TY.Year = CSS.Year,
     COACH as C on C.ID = CSS.Coach_ID
 where
-    P.ID = 3;
+    P.ID = 3
+    and CSS.Wins < 10;
 
 -- Question 3 D
 select
