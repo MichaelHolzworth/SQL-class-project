@@ -87,3 +87,22 @@ join
     TEAM_YEAR as TY on SP.Year = TY.Year and TY.Team_ID = SP.TeamID,
     COACH_SEASON_STAT as CSS on TY.Coach_ID = CSS.Coach_ID and TY.Year = CSS.Year
 group by SP.TeamID;
+
+-- Question 3 F
+select
+	C.Name, 
+	C.ID
+from 
+	(select
+		Coach_ID, 
+		SUM(Wins) as SW
+	from
+		COACH_SEASON_STAT as CSS
+	group by
+		Coach_ID
+	order by
+		SW
+	limit 1) as CMAX,
+	COACH as C
+where
+	C.ID = CMAX.Coach_ID;
