@@ -1,0 +1,30 @@
+﻿CREATE VIEW Player_Annual_Defensive_Averages AS
+    SELECT DISTINCT Player.Name,
+                    Player_season_stats.Year AS Season_Year,
+                    Avg(Player_season_stats.Sack) AS Average_Sacks,
+                    avg(Player_season_stats.Solo) AS Average_Tackles
+      FROM Player,
+           Player_year,
+           Player_season_stats
+     WHERE player.id = Player_season_stats.player_id
+     GROUP BY player.name,
+              Player_season_stats.year;
+
+
+
+
+
+
+
+
+
+
+CREATE VIEW Coach_Average_Runs_and_Passes AS
+    SELECT DISTINCT coach.Name,
+                    AVG(coach_season_stat.Num_Runs) AS Average_Num_Runs,
+                    AVG(coach_season_stat.Num_Passes) AS Average_Num_Passes,
+                    count(coach_season_stat.Year) AS Total_Years_Coached
+      FROM coach,
+           coach_season_stat
+     WHERE coach.id = coach_season_stat.Coach_ID
+     GROUP BY coach.Name;
